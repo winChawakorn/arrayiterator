@@ -8,7 +8,7 @@ import java.util.NoSuchElementException;
  * the value.
  * 
  * @author Chawakorn Suphepre
- * @version 2017.02.02
+ * @version 2017.05.01
  * @param <T>
  *            is a type parameter that can be changed to data type.
  */
@@ -18,6 +18,7 @@ public class ArrayIterator<T> implements Iterator<T> {
 	private T[] array;
 	/** count is the number that used to define */
 	private int count;
+	private int saveCount;
 	/**
 	 * canRemove is a boolean used to check can we use remove at that time. true
 	 * if can, false if not.
@@ -45,6 +46,7 @@ public class ArrayIterator<T> implements Iterator<T> {
 	 */
 	public T next() {
 		if (hasNext()) {
+			count = saveCount;
 			canRemove = true;
 			return array[count++];
 		} else {
@@ -63,7 +65,7 @@ public class ArrayIterator<T> implements Iterator<T> {
 	public boolean hasNext() {
 		for (int i = count; i < this.array.length; i++) {
 			if (array[i] != null) {
-				count = i;
+				saveCount = i;
 				return true;
 			}
 		}
